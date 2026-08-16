@@ -33,7 +33,7 @@ jobs:
           set -e
 
           KEY="$(tr -d '\r\n' < indexnow-key.txt)"
-          URL="https://commodo163.github.io/tvbox-site/indexnow-key.txt"
+          URL="https://tvboxhome.github.io/indexnow-key.txt"
 
           for attempt in 1 2 3 4 5 6; do
             REMOTE="$(curl -fsSL "$URL" || true)"
@@ -64,11 +64,11 @@ jobs:
               --get \
               "https://api.indexnow.org/indexnow" \
               --data-urlencode \
-              "url=https://commodo163.github.io/tvbox-site/" \
+              "url=https://tvboxhome.github.io/" \
               --data-urlencode \
               "key=${KEY}" \
               --data-urlencode \
-              "keyLocation=https://commodo163.github.io/tvbox-site/indexnow-key.txt"
+              "keyLocation=https://tvboxhome.github.io/indexnow-key.txt"
           )"
 
           echo "IndexNow HTTP status: ${STATUS}"
