@@ -1795,10 +1795,8 @@
           </p>
 
           <a class="btn btn-primary download-main-btn"
-             href="https://github.com/Commodo163/tvbox-site/releases/download/tvbox-2.0.4/TVbox_2.0.4.apk">
+             href="https://github.com/Commodo163/tvbox-site/releases/download/tvbox-2.1.0/TVbox_2.1.0.apk">
             Скачать TVbox
-            <span id="tvbox-downloads"
-                  class="download-count"></span>
           </a>
 
         </article>
@@ -1820,8 +1818,6 @@
           <a class="btn btn-primary download-main-btn"
              href="https://github.com/Commodo163/tvbox-site/releases/download/tvbox-2.0.4/TVboxHome_1.0.2.apk">
             Скачать TVboxHome
-            <span id="home-downloads"
-                  class="download-count"></span>
           </a>
 
         </article>
@@ -2027,15 +2023,10 @@
 
         <div class="live-stats">
 
-          <span class="live-stat">
+          <span class="live-stat" id="visitor-stat" hidden>
             <span class="live-dot"></span>
-            Уникальных посетителей:
-            <strong id="visitor-unique">—</strong>
-          </span>
-
-          <span class="live-stat">
-            Просмотров:
-            <strong id="visitor-total">—</strong>
+            Посетителей:
+            <strong id="visitor-count"></strong>
           </span>
 
           <span class="live-stat">
@@ -2073,25 +2064,33 @@
 <script>
 (async function loadDownloadStats() {
   try {
-    const response = await fetch(
-      'https://api.github.com/repos/Commodo163/tvbox-site/releases/tags/tvbox-2.0.4',
-      { headers: { 'Accept': 'application/vnd.github+json' } }
+    const releaseTags = ['tvbox-2.0.4', 'tvbox-2.1.0'];
+    const results = await Promise.allSettled(
+      releaseTags.map(tag =>
+        fetch(
+          `https://api.github.com/repos/Commodo163/tvbox-site/releases/tags/${tag}`,
+          { headers: { 'Accept': 'application/vnd.github+json' } }
+        ).then(response => response.ok ? response.json() : null)
+      )
     );
+    const releases = results
+      .filter(result => result.status === 'fulfilled' && result.value)
+      .map(result => result.value);
 
-    if (!response.ok) return;
-
-    const release = await response.json();
+    if (!releases.length) return;
 
     let tvbox = 0;
     let home = 0;
 
-    for (const asset of release.assets || []) {
-      if (asset.name === 'TVbox_2.0.4.apk') {
-        tvbox = asset.download_count || 0;
-      }
+    for (const release of releases) {
+      for (const asset of release.assets || []) {
+        if (asset.name === 'TVbox_2.0.4.apk' || asset.name === 'TVbox_2.1.0.apk') {
+          tvbox += asset.download_count || 0;
+        }
 
-      if (asset.name === 'TVboxHome_1.0.2.apk') {
-        home = asset.download_count || 0;
+        if (asset.name === 'TVboxHome_1.0.2.apk') {
+          home += asset.download_count || 0;
+        }
       }
     }
 
@@ -2099,23 +2098,11 @@
       new Intl.NumberFormat('ru-RU').format(n);
 
     const ids = {
-      tvbox: document.getElementById('tvbox-downloads'),
-      home: document.getElementById('home-downloads'),
-      homeTop: document.getElementById('home-downloads-top'),
       tvboxTotal: document.getElementById('tvbox-downloads-total'),
       homeTotal: document.getElementById('home-downloads-total'),
       all: document.getElementById('all-downloads'),
       footer: document.getElementById('downloads-footer')
     };
-
-    if (ids.tvbox)
-      ids.tvbox.textContent = '↓ ' + fmt(tvbox);
-
-    if (ids.home)
-      ids.home.textContent = '↓ ' + fmt(home);
-
-    if (ids.homeTop)
-      ids.homeTop.textContent = '↓ ' + fmt(home);
 
     if (ids.tvboxTotal)
       ids.tvboxTotal.textContent = fmt(tvbox);
@@ -2154,21 +2141,22 @@
 
     const data = await response.json();
 
-    const uniqueEl =
-      document.getElementById('visitor-unique');
+    const statEl =
+      document.getElementById('visitor-stat');
 
-    const totalEl =
-      document.getElementById('visitor-total');
+    const countEl =
+      document.getElementById('visitor-count');
 
     const fmt = value =>
       new Intl.NumberFormat('ru-RU')
         .format(Number(value || 0));
 
-    if (uniqueEl)
-      uniqueEl.textContent = fmt(data.count_unique);
+    const count = Number(data.count_unique ?? data.count);
 
-    if (totalEl)
-      totalEl.textContent = fmt(data.count);
+    if (statEl && countEl && Number.isFinite(count)) {
+      countEl.textContent = fmt(count);
+      statEl.hidden = false;
+    }
 
   } catch (e) {
     console.debug('Visitor counter unavailable');
