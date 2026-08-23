@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://tvboxhome.github.io/sitemap.xml
+Sitemap: https://tvboxhome.github.io/sitemap.txt
