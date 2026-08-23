@@ -1795,7 +1795,7 @@
           </p>
 
           <a class="btn btn-primary download-main-btn"
-             href="https://github.com/Commodo163/tvbox-site/releases/download/tvbox-2.1.1/TVbox_2.1.1.apk">
+             href="https://github.com/Commodo163/tvbox-site/releases/download/tvbox-2.1.2/TVbox_2.1.2.apk">
             Скачать TVbox
           </a>
 
@@ -1816,7 +1816,7 @@
           </p>
 
           <a class="btn btn-primary download-main-btn"
-             href="https://github.com/Commodo163/tvbox-site/releases/download/tvbox-2.1.1/TVboxHome_1.1.0.apk">
+             href="https://github.com/Commodo163/tvbox-site/releases/download/tvbox-2.1.2/TVboxHome_1.2.0.apk">
             Скачать TVboxHome
           </a>
 
@@ -2064,7 +2064,7 @@
 <script>
 (async function loadDownloadStats() {
   try {
-    const releaseTags = ['tvbox-2.0.4', 'tvbox-2.1.0', 'tvbox-2.1.1'];
+    const releaseTags = ['tvbox-2.0.4', 'tvbox-2.1.0', 'tvbox-2.1.1', 'tvbox-2.1.2'];
     const results = await Promise.allSettled(
       releaseTags.map(tag =>
         fetch(
@@ -2088,14 +2088,16 @@
         if (
           asset.name === 'TVbox_2.0.4.apk' ||
           asset.name === 'TVbox_2.1.0.apk' ||
-          asset.name === 'TVbox_2.1.1.apk'
+          asset.name === 'TVbox_2.1.1.apk' ||
+          asset.name === 'TVbox_2.1.2.apk'
         ) {
           tvbox += asset.download_count || 0;
         }
 
         if (
           asset.name === 'TVboxHome_1.0.2.apk' ||
-          asset.name === 'TVboxHome_1.1.0.apk'
+          asset.name === 'TVboxHome_1.1.0.apk' ||
+          asset.name === 'TVboxHome_1.2.0.apk'
         ) {
           home += asset.download_count || 0;
         }
