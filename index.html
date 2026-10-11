@@ -2166,7 +2166,12 @@
       new Intl.NumberFormat('ru-RU')
         .format(Number(value || 0));
 
-    const count = Number(data.count_unique ?? data.count);
+    // GoatCounter returns formatted strings, including narrow no-break spaces.
+    const rawCount = data.count_unique ?? data.count;
+    const normalizedCount = String(rawCount ?? '').replace(/\s/g, '');
+    const count = /^\d+$/.test(normalizedCount)
+      ? Number(normalizedCount)
+      : NaN;
 
     if (statEl && countEl && Number.isFinite(count)) {
       countEl.textContent = fmt(count);
