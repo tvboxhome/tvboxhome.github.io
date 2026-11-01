@@ -1660,7 +1660,7 @@ a:focus-visible,summary:focus-visible { outline:3px solid #71dbe8; outline-offse
       <div class="stats-strip">
 
         <span class="stat-chip">
-          ↓ Скачиваний старых релизов на GitHub:
+          ↓ Загрузок прежних APK через GitHub Releases:
           <strong id="all-downloads">загрузка…</strong>
         </span>
 
@@ -2129,7 +2129,7 @@ a:focus-visible,summary:focus-visible { outline:3px solid #71dbe8; outline-offse
           </span>
 
           <span class="live-stat">
-            ↓ Скачиваний старых релизов на GitHub:
+            ↓ Загрузок прежних APK через GitHub Releases:
             <strong id="downloads-footer">—</strong>
           </span>
 
@@ -2181,8 +2181,8 @@ a:focus-visible,summary:focus-visible { outline:3px solid #71dbe8; outline-offse
     if (!releases.length) return;
 
     let tvbox = 0;
-    // Сохраняем одно скачивание от отозванного первого файла 1.1.0.
-    let home = 1;
+    // Учитываем только фактические download_count доступных GitHub Release assets.
+    let home = 0;
 
     for (const release of releases) {
       for (const asset of release.assets || []) {
