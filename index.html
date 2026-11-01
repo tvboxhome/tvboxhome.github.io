@@ -1311,6 +1311,16 @@ a:focus-visible,summary:focus-visible { outline:3px solid #71dbe8; outline-offse
  .access-note { font-size:13px; }
 }
 
+
+/* Temporary service status notice — removable independently of the site layout. */
+.server-status-notice{padding:18px 0 0}
+.server-status-card{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:22px 26px;border:1px solid rgba(255,185,92,.28);border-radius:22px;background:linear-gradient(110deg,rgba(255,180,74,.10),rgba(124,99,255,.055),rgba(53,221,255,.035));box-shadow:0 16px 45px rgba(0,0,0,.15)}
+.server-status-copy{min-width:0}
+.server-status-copy strong{display:block;font-size:18px;color:#fff;margin-bottom:5px}
+.server-status-copy p{margin:0;font-size:14px;line-height:1.55;color:#bdc6d4}
+.server-status-card .btn{flex-shrink:0;white-space:normal;text-align:center}
+@media(max-width:760px){.server-status-card{flex-direction:column;align-items:stretch;padding:20px}.server-status-card .btn{width:100%}}
+
 </style>
 
   <script type="application/ld+json">
@@ -1370,6 +1380,20 @@ a:focus-visible,summary:focus-visible { outline:3px solid #71dbe8; outline-offse
 
 
 <main>
+
+  <aside class="server-status-notice" id="server-status-notice" aria-label="Информация о работе TVbox">
+    <div class="wrap">
+      <div class="server-status-card">
+        <div class="server-status-copy">
+          <strong>⚠️ Временные проблемы с подключением TVbox</strong>
+          <p>Сейчас возможны перебои в работе сервиса. Мы занимаемся восстановлением. Новости о состоянии сервера и обсуждение — в официальном Telegram-канале.</p>
+        </div>
+        <a class="btn btn-soft" href="https://t.me/tvbox_updates" target="_blank" rel="noopener noreferrer" data-goatcounter-click="open-telegram-server-status" data-goatcounter-title="Telegram — новости о работе TVbox">Новости и обсуждение в Telegram →</a>
+      </div>
+    </div>
+  </aside>
+
+
 
   <section class="hero">
     <div class="wrap">
