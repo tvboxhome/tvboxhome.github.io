@@ -1314,7 +1314,7 @@ a:focus-visible,summary:focus-visible { outline:3px solid #71dbe8; outline-offse
 
 /* Temporary service status notice — removable independently of the site layout. */
 .server-status-notice{padding:18px 0 0}
-.server-status-card{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:22px 26px;border:1px solid rgba(255,185,92,.28);border-radius:22px;background:linear-gradient(110deg,rgba(255,180,74,.10),rgba(124,99,255,.055),rgba(53,221,255,.035));box-shadow:0 16px 45px rgba(0,0,0,.15)}
+.server-status-card{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:22px 26px;border:1px solid rgba(53,221,255,.28);border-radius:22px;background:linear-gradient(110deg,rgba(53,221,255,.10),rgba(124,99,255,.055),rgba(53,221,255,.035));box-shadow:0 16px 45px rgba(0,0,0,.15)}
 .server-status-copy{min-width:0}
 .server-status-copy strong{display:block;font-size:18px;color:#fff;margin-bottom:5px}
 .server-status-copy p{margin:0;font-size:14px;line-height:1.55;color:#bdc6d4}
@@ -1385,8 +1385,8 @@ a:focus-visible,summary:focus-visible { outline:3px solid #71dbe8; outline-offse
     <div class="wrap">
       <div class="server-status-card">
         <div class="server-status-copy">
-          <strong>⚠️ Временные проблемы с подключением TVbox</strong>
-          <p>Сейчас возможны перебои в работе сервиса. Мы занимаемся восстановлением. Новости о состоянии сервера и обсуждение — в официальном Telegram-канале.</p>
+          <strong>Работа сервера TVbox восстановлена</strong>
+          <p>Обновлено 2 ноября 2026 года. Если приложение показывает ошибку подключения, нажмите «Повторить». Не удаляйте приложение и не очищайте данные. Если ошибка сохраняется, напишите в поддержку — контакты ниже.</p>
         </div>
         <a class="btn btn-soft" href="https://t.me/tvbox_updates" target="_blank" rel="noopener noreferrer" data-goatcounter-click="open-telegram-server-status" data-goatcounter-title="Telegram — новости о работе TVbox">Новости и обсуждение в Telegram →</a>
       </div>
@@ -1736,6 +1736,12 @@ a:focus-visible,summary:focus-visible { outline:3px solid #71dbe8; outline-offse
 
       <div class="faq">
 
+        <article class="faq-item" id="compatibility">
+          <h3>Есть звук, но нет изображения?</h3>
+          <p>Попробуйте «Режим совместимости»: в разделе телевидения наведите фокус на карточку любого канала, не запуская его. Удерживайте OK до появления меню, включите «Режим совместимости», затем нажмите «Назад» и запустите канал.</p>
+          <p>Настройка сохраняется для приложения. Если режим не помог или воспроизведение стало хуже, отключите его тем же способом. Ошибки подключения и проверки доступа этот режим не исправляет. <a href="/ustanovka/#compatibility" data-goatcounter-click="open-compatibility-guide">Подробная инструкция →</a></p>
+        </article>
+
         <article class="faq-item">
           <h3>На каких устройствах работает TVbox?</h3>
           <p>
@@ -1790,6 +1796,18 @@ a:focus-visible,summary:focus-visible { outline:3px solid #71dbe8; outline-offse
   </section>
 
 
+
+  <section class="section" aria-labelledby="download-stats-heading">
+    <div class="wrap">
+      <div class="section-head"><h2 id="download-stats-heading">Интерес к приложениям</h2>
+        <p>Нажатия на кнопки скачивания на сайте. Это не число завершённых загрузок или установок.</p></div>
+      <div class="stats-strip">
+        <span class="stat-chip">Клики «Скачать TVbox 2.5.6»: <strong id="tvbox-current-clicks">нет данных</strong></span>
+        <span class="stat-chip">Клики «Скачать TVboxHome 1.2.0»: <strong id="home-current-clicks">нет данных</strong></span>
+      </div>
+      <p class="access-note">Накопленные данные GoatCounter. Исторические загрузки через GitHub Releases показаны отдельно; счётчики не складываются.</p>
+    </div>
+  </section>
 
   <section class="history-section" id="history">
     <div class="wrap">
@@ -2150,7 +2168,7 @@ a:focus-visible,summary:focus-visible { outline:3px solid #71dbe8; outline-offse
 
           <span class="live-stat" id="visitor-stat" hidden>
             <span class="live-dot"></span>
-            Посетителей:
+            Счётчик посещений:
             <strong id="visitor-count"></strong>
           </span>
 
@@ -2289,8 +2307,8 @@ a:focus-visible,summary:focus-visible { outline:3px solid #71dbe8; outline-offse
         .format(Number(value || 0));
 
     // GoatCounter returns formatted strings, including narrow no-break spaces.
-    const rawCount = data.count_unique ?? data.count;
-    const normalizedCount = String(rawCount ?? '').replace(/\s/g, '');
+    const rawCount = data.count;
+    const normalizedCount = String(rawCount ?? '').replace(/[\s,]/g, '');
     const count = /^\d+$/.test(normalizedCount)
       ? Number(normalizedCount)
       : NaN;
@@ -2306,6 +2324,7 @@ a:focus-visible,summary:focus-visible { outline:3px solid #71dbe8; outline-offse
 })();
 </script>
 
+<script defer src="/assets/download-clicks.js"></script>
 </body>
 </html>
 

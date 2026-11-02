@@ -2,78 +2,30 @@ name: Notify IndexNow
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
     paths:
-      - "index.html"
-      - "robots.txt"
-      - "sitemap.xml"
-      - "assets/**"
-      - "indexnow-key.txt"
-
+      - '**/*.html'
+      - 'robots.txt'
+      - 'sitemap.xml'
+      - 'sitemap.txt'
+      - 'assets/**'
+      - 'indexnow-key.txt'
+      - 'scripts/notify_indexnow.py'
+      - '.github/workflows/indexnow.yml'
   workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: indexnow-main
+  cancel-in-progress: true
+
 jobs:
   notify-indexnow:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 12
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Wait for GitHub Pages deployment
-        run: sleep 90
-
-      - name: Verify public IndexNow key
-        shell: bash
-        run: |
-          set -e
-
-          KEY="$(tr -d '\r\n' < indexnow-key.txt)"
-          URL="https://tvboxhome.github.io/indexnow-key.txt"
-
-          for attempt in 1 2 3 4 5 6; do
-            REMOTE="$(curl -fsSL "$URL" || true)"
-
-            if [ "$REMOTE" = "$KEY" ]; then
-              echo "IndexNow key is publicly available."
-              exit 0
-            fi
-
-            echo "Waiting for Pages: attempt ${attempt}/6"
-            sleep 30
-          done
-
-          echo "IndexNow key is not public yet."
-          exit 1
-
-      - name: Notify IndexNow
-        shell: bash
-        run: |
-          set -e
-
-          KEY="$(tr -d '\r\n' < indexnow-key.txt)"
-
-          STATUS="$(
-            curl -sS \
-              -o /tmp/indexnow.txt \
-              -w "%{http_code}" \
-              --get \
-              "https://api.indexnow.org/indexnow" \
-              --data-urlencode \
-              "url=https://tvboxhome.github.io/" \
-              --data-urlencode \
-              "key=${KEY}" \
-              --data-urlencode \
-              "keyLocation=https://tvboxhome.github.io/indexnow-key.txt"
-          )"
-
-          echo "IndexNow HTTP status: ${STATUS}"
-          cat /tmp/indexnow.txt || true
-
-          if [ "$STATUS" != "200" ] && [ "$STATUS" != "202" ]; then
-            exit 1
-          fi
+      - uses: actions/checkout@v4
+      - name: Validate sitemap and wait for current Pages content
+        run: python3 scripts/notify_indexnow.py
