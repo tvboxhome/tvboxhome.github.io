@@ -70,3 +70,24 @@
 2. Подтвердить юридические права на доступный контент и контакт для конфиденциальности.
 3. Подготовить квадратные и промо-изображения нужных размеров.
 4. Создать учётные записи издателя; заполнить формы и отправить на проверку только после согласования.
+
+
+## Локальный аудит APK (отчёт 03.11.2026; без криптографической верификации)
+- TVbox 2.5.6: SHA-256 `8fa4716ba679522a72161f9e0610d4978b5591f33c42c179019eb0eecea38145`; package `com.example.tvbox`; minSdk 26; targetSdk 35; ZIP integrity OK; APK signing block present.
+- TVboxHome 1.2.0: SHA-256 `04b0793024c074a365955846b57257dd167a4041f2bb2b01f1e5fa761d6b9a02`; package `com.tvbox.launcher`; minSdk 24; targetSdk 37; ZIP integrity OK; APK signing block present.
+- Оба APK: arm64-v8a, armeabi-v7a, x86, x86_64.
+- TVboxHome разрешения: QUERY_ALL_PACKAGES, INTERNET, ACCESS_NETWORK_STATE, ACCESS_WIFI_STATE, ACCESS_COARSE_LOCATION, REQUEST_INSTALL_PACKAGES, REQUEST_DELETE_PACKAGES, READ_HOME_CONTENT. Проверить необходимость каждого перед подачей.
+- ВАЖНО: `apk_signing_block_present` — **не** криптографическая проверка сертификата. Нужен `apksigner verify --verbose --print-certs` на исходных файлах.
+
+### Проверка на Mac (ничего не меняет в APK)
+```bash
+SDK="$HOME/Library/Android/sdk"
+APKSIGNER="$(find "$SDK/build-tools" -type f -name apksigner | sort -V | tail -1)"
+test -x "$APKSIGNER" || { echo "apksigner не найден"; exit 1; }
+for APK in "$HOME/Downloads/TVbox_2.5.6.apk" "$HOME/Downloads/TVboxHome_1.2.0.apk"; do
+  test -f "$APK" || { echo "Файл отсутствует: $APK"; continue; }
+  echo "==== $APK ===="
+  shasum -a 256 "$APK"
+  "$APKSIGNER" verify --verbose --print-certs "$APK"
+done
+```
