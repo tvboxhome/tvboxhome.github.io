@@ -72,12 +72,12 @@
 4. Создать учётные записи издателя; заполнить формы и отправить на проверку только после согласования.
 
 
-## Локальный аудит APK (отчёт 03.11.2026; без криптографической верификации)
+## Локальный аудит APK (отчёт 03.11.2026; подпись подтверждена отдельно)
 - TVbox 2.5.6: SHA-256 `8fa4716ba679522a72161f9e0610d4978b5591f33c42c179019eb0eecea38145`; package `com.example.tvbox`; minSdk 26; targetSdk 35; ZIP integrity OK; APK signing block present.
 - TVboxHome 1.2.0: SHA-256 `04b0793024c074a365955846b57257dd167a4041f2bb2b01f1e5fa761d6b9a02`; package `com.tvbox.launcher`; minSdk 24; targetSdk 37; ZIP integrity OK; APK signing block present.
 - Оба APK: arm64-v8a, armeabi-v7a, x86, x86_64.
 - TVboxHome разрешения: QUERY_ALL_PACKAGES, INTERNET, ACCESS_NETWORK_STATE, ACCESS_WIFI_STATE, ACCESS_COARSE_LOCATION, REQUEST_INSTALL_PACKAGES, REQUEST_DELETE_PACKAGES, READ_HOME_CONTENT. Проверить необходимость каждого перед подачей.
-- ВАЖНО: `apk_signing_block_present` — **не** криптографическая проверка сертификата. Нужен `apksigner verify --verbose --print-certs` на исходных файлах.
+- Криптографическая проверка `apksigner verify --verbose --print-certs` выполнена владельцем 03.11.2026: оба APK и TVbox 2.5.51 имеют `Verifies`, v2=true, v1/v3=false, одного подписанта, сертификат CN=TVbox, RSA 2048, SHA-256 сертификата `3b252a4d180dc67e9221d18f59fbd1ab964799b0f2c405cb8cb1dcec3d9d2616`. Это подтверждает корректность подписей, но не соответствие всем правилам магазинов.
 
 ### Проверка на Mac (ничего не меняет в APK)
 ```bash
