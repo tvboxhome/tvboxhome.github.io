@@ -1,8 +1,8 @@
 // Read existing public counters only. Never sends an analytics hit or delays navigation.
 (async function loadDownloadClicks() {
   const counters = [
-    ['download-tvbox-2-5-6', 'tvbox-current-clicks'],
-    ['download-tvboxhome-1-2-0', 'home-current-clicks']
+    ['download-tvbox-2-5-7', 'tvbox-current-clicks'],
+    ['download-tvboxhome-1-2-1', 'home-current-clicks']
   ];
   await Promise.allSettled(counters.map(async ([event, id]) => {
     const controller = new AbortController();
