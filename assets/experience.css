@@ -15,3 +15,17 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #67
 @media(min-width:1000px){.hero>.hero-layout{display:grid;grid-template-columns:1fr 1.1fr;gap:42px;align-items:center}.hero-intro{min-width:0;text-align:left}.hero-intro .hero-icon{margin-left:0}.hero-intro h1{max-width:none}}
 .nav .btn-primary,.hero .btn-primary,.news-card .btn-primary{background:#d8f7ff;color:#07121c;border-color:#d8f7ff;box-shadow:0 8px 28px #39c9ef16}.nav .btn-primary:hover,.hero .btn-primary:hover,.news-card .btn-primary:hover{background:white;border-color:white}
 .hero .hero-icon{align-self:auto}.hero-preview{width:100%}.hero-intro .hero-copy{margin-left:0}
+
+/* Compact download cards: consistent header, copy and action rows. */
+.download-products{gap:24px}
+.download-products .download-card{min-height:0;padding:30px;border-radius:24px;gap:24px}
+.product-heading{display:flex;align-items:center;gap:18px}
+.download-products .download-icon{width:64px;height:64px;margin:0;border-radius:16px}
+.download-products h3{font-size:28px;line-height:1.2;margin:0 0 6px}
+.product-version{color:#aeb8c9;font-size:14px}
+.download-products .product-description{flex:0;min-height:0;max-width:none;margin:0;font-size:17px;line-height:1.65}
+.product-actions{margin-top:auto;display:flex;flex-direction:column;gap:16px}
+.download-products .download-card .download-main-btn{width:100%!important;min-width:0!important;height:auto!important;min-height:50px!important;white-space:normal!important;display:flex;gap:14px}
+.product-guide{font-size:14px;color:#b8dce8;align-self:center;text-align:center;line-height:1.5}
+.download-update-note{text-align:center;color:#aeb8c9;font-size:14px;line-height:1.8;margin:24px auto 0;max-width:680px}
+@media(max-width:720px){.download-products{gap:16px}.download-products .download-card{padding:24px;gap:20px}.download-products h3{font-size:25px}.download-products .product-description{font-size:16px}.download-update-note{padding:0 8px}}
